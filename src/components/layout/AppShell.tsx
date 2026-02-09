@@ -16,6 +16,7 @@ export function AppShell({ children, studentName }: AppShellProps) {
   return (
     <div className="min-h-screen bg-neutral-50">
       <Header onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <div className="h-header" />
       <Sidebar isOpen={sidebarOpen} studentName={studentName} />
       <main
         className={cn(

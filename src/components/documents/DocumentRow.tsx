@@ -11,6 +11,13 @@ interface DocumentRowProps {
   document: Document;
 }
 
+function formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 export function DocumentRow({ document }: DocumentRowProps) {
   const [uploadOpen, setUploadOpen] = useState(false);
   const needsUpload =
@@ -21,14 +28,21 @@ export function DocumentRow({ document }: DocumentRowProps) {
 
   return (
     <>
-      <div className="flex items-center gap-4 px-4 py-3 bg-white rounded-lg border border-neutral-200 hover:shadow-sm transition-shadow">
+      <div
+        className={`flex items-center gap-4 px-5 py-4 rounded-xl border transition-shadow ${
+          document.status === "validated"
+            ? "bg-status-validated-bg/50 border-status-validated/20"
+            : "bg-white border-neutral-200 hover:shadow-sm"
+        }`}
+      >
+        {/* Document info */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-0.5">
+          <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-neutral-900 truncate">
               {document.name}
             </span>
             {document.required && (
-              <span className="text-xs text-status-error">*</span>
+              <span className="text-xs text-status-error font-bold">*</span>
             )}
             {document.helpText && (
               <span title={document.helpText}>
@@ -37,45 +51,57 @@ export function DocumentRow({ document }: DocumentRowProps) {
             )}
           </div>
           {document.status === "rejected" && document.rejectionReason && (
-            <div className="flex items-start gap-1.5 mt-1">
+            <div className="flex items-start gap-1.5 mt-1.5">
               <AlertCircle className="w-3.5 h-3.5 text-status-error shrink-0 mt-0.5" />
-              <p className="text-xs text-status-error">
+              <p className="text-xs text-status-error leading-relaxed">
                 {document.rejectionReason}
               </p>
             </div>
           )}
           {document.deadline && (
-            <p className="text-xs text-neutral-500 mt-0.5">
-              Fecha límite: {document.deadline.toLocaleDateString("es-ES")}
+            <p className="text-xs text-neutral-400 mt-1">
+              Fecha límite: {formatDate(document.deadline)}
             </p>
           )}
         </div>
 
-        <DocumentStatusBadge status={document.status} />
+        {/* Status badge */}
+        <div className="shrink-0">
+          <DocumentStatusBadge status={document.status} />
+        </div>
 
+        {/* Action */}
         <div className="shrink-0">
           {needsUpload && (
-            <Button variant="outline" size="sm" onClick={() => setUploadOpen(true)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setUploadOpen(true)}
+            >
               <Upload className="w-3.5 h-3.5" />
-              {canResubmit ? "Resubir" : "Subir"}
+              {canResubmit ? "Reemplazar archivo" : "Subir archivo"}
             </Button>
           )}
           {document.status === "validated" && document.fileUrl && (
             <Button variant="ghost" size="sm">
               <Eye className="w-3.5 h-3.5" />
-              Ver
+              Ver archivo
             </Button>
           )}
           {document.status === "validating" && (
             <Button variant="ghost" size="sm" disabled>
               <Clock className="w-3.5 h-3.5" />
-              Pendiente
+              En revisión
             </Button>
           )}
           {document.status === "pending" && (
-            <Button variant="outline" size="sm" onClick={() => setUploadOpen(true)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setUploadOpen(true)}
+            >
               <Upload className="w-3.5 h-3.5" />
-              Subir
+              Subir archivo
             </Button>
           )}
         </div>

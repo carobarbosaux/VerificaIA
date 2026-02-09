@@ -8,7 +8,7 @@ interface HeaderProps {
 
 export function Header({ onToggleSidebar }: HeaderProps) {
   return (
-    <header className="h-header w-full bg-gradient-to-r from-primary-700 to-primary-500 flex items-center px-6">
+    <header className="fixed top-0 left-0 right-0 h-header bg-gradient-to-r from-primary-700 to-primary-500 flex items-center px-6 z-50">
       <button
         onClick={onToggleSidebar}
         className="text-white hover:bg-white/10 p-2 rounded-lg transition-colors mr-4"
