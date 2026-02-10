@@ -26,6 +26,7 @@ export interface Document {
   maxResubmitAttempts: number;
   phase: 1 | 2;
   order: number;
+  description?: string;
   helpText?: string;
 }
 

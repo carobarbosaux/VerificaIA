@@ -3,8 +3,8 @@ import type { Document, DocumentGroup } from "@/types/document";
 
 export const mockStudent: Student = {
   id: "EST-2024-001",
-  name: "Soraya Martínez",
-  email: "soraya.martinez@estudiante.unir.net",
+  name: "Laura Hernández",
+  email: "laura.hernandez@estudiante.unir.net",
   program: "Máster en Diseño de Experiencia de Usuario (UX)",
   academicYear: "2024/2025",
   semester: "Primer Cuatrimestre",
@@ -69,6 +69,7 @@ export const mockDocuments: Document[] = [
     maxResubmitAttempts: 3,
     phase: 1,
     order: 1,
+    description: "DNI, Pasaporte o Cédula de Ciudadanía",
     helpText: "Escaneo legible por ambas caras del documento de identidad.",
   },
   {
@@ -85,6 +86,7 @@ export const mockDocuments: Document[] = [
     maxResubmitAttempts: 3,
     phase: 1,
     order: 2,
+    description: "Foto reciente con fondo blanco en formato JPG o PNG",
     helpText: "Foto reciente, fondo blanco, formato JPG o PNG.",
   },
   {
@@ -101,6 +103,7 @@ export const mockDocuments: Document[] = [
     maxResubmitAttempts: 3,
     phase: 1,
     order: 3,
+    description: "Certificado de estar en posesión del título",
     helpText: "Copia del título universitario legalizado o apostillado.",
   },
   {
@@ -117,6 +120,7 @@ export const mockDocuments: Document[] = [
     maxResubmitAttempts: 3,
     phase: 1,
     order: 4,
+    description: "Certificado académico oficial con calificaciones",
     helpText:
       "Certificado académico oficial con calificaciones de la carrera previa.",
   },
@@ -135,6 +139,7 @@ export const mockDocuments: Document[] = [
     maxResubmitAttempts: 3,
     phase: 1,
     order: 5,
+    description: "CV actualizado en formato PDF usando la plantilla UNIR",
     helpText: "CV actualizado en formato PDF.",
   },
   {
@@ -151,6 +156,7 @@ export const mockDocuments: Document[] = [
     maxResubmitAttempts: 3,
     phase: 2,
     order: 6,
+    description: "Explica tus razones para cursar este programa",
   },
   {
     id: "doc-7",
@@ -166,6 +172,7 @@ export const mockDocuments: Document[] = [
     maxResubmitAttempts: 3,
     phase: 2,
     order: 7,
+    description: "Recibo o comprobante bancario del pago de matrícula",
     helpText: "Recibo o comprobante bancario del pago de matrícula.",
   },
 ];

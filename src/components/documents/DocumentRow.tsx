@@ -11,13 +11,6 @@ interface DocumentRowProps {
   document: Document;
 }
 
-function formatDate(date: Date): string {
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
-}
-
 export function DocumentRow({ document }: DocumentRowProps) {
   const [uploadOpen, setUploadOpen] = useState(false);
   const needsUpload =
@@ -58,9 +51,9 @@ export function DocumentRow({ document }: DocumentRowProps) {
               </p>
             </div>
           )}
-          {document.deadline && (
+          {document.description && (
             <p className="text-xs text-neutral-400 mt-1">
-              Fecha límite: {formatDate(document.deadline)}
+              {document.description}
             </p>
           )}
         </div>

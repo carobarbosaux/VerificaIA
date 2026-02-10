@@ -18,16 +18,11 @@ export function Header({ onToggleSidebar }: HeaderProps) {
       </button>
 
       {/* Logo UNIR */}
-      <div className="flex items-center gap-2">
-        <span className="text-white text-2xl font-bold tracking-tight">
-          unir
-        </span>
-        <span className="text-white/70 text-[10px] leading-tight uppercase">
-          La Universidad
-          <br />
-          en Internet
-        </span>
-      </div>
+      <img
+        src="/logo-unir.svg"
+        alt="UNIR - La Universidad en Internet"
+        className="h-6"
+      />
     </header>
   );
 }
