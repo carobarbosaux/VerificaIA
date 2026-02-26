@@ -5,7 +5,8 @@ import { Upload, Eye, Clock, HelpCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DocumentStatusBadge } from "./DocumentStatusBadge";
 import { UploadModal } from "./UploadModal";
-import type { Document } from "@/types/document";
+import { useUploadedDocs } from "@/context/UploadedDocsContext";
+import type { Document, DocumentStatus } from "@/types/document";
 
 interface DocumentRowProps {
   document: Document;
@@ -13,18 +14,26 @@ interface DocumentRowProps {
 
 export function DocumentRow({ document }: DocumentRowProps) {
   const [uploadOpen, setUploadOpen] = useState(false);
+  const { isDocUploaded } = useUploadedDocs();
+
+  // Si fue subido en el flujo de onboarding, mostrarlo como "validating"
+  const effectiveStatus: DocumentStatus =
+    isDocUploaded(document.id) ? "validating" : document.status;
+
   const needsUpload =
-    document.status === "not_uploaded" || document.status === "rejected";
+    effectiveStatus === "not_uploaded" || effectiveStatus === "rejected";
   const canResubmit =
-    document.status === "rejected" &&
+    effectiveStatus === "rejected" &&
     document.resubmitAttempts < document.maxResubmitAttempts;
 
   return (
     <>
       <div
         className={`flex items-center gap-4 px-5 py-4 rounded-xl border transition-shadow ${
-          document.status === "validated"
+          effectiveStatus === "validated"
             ? "bg-status-validated-bg/50 border-status-validated/20"
+            : effectiveStatus === "validating"
+            ? "bg-status-validating-bg/30 border-status-validating/20"
             : "bg-white border-neutral-200 hover:shadow-sm"
         }`}
       >
@@ -43,7 +52,7 @@ export function DocumentRow({ document }: DocumentRowProps) {
               </span>
             )}
           </div>
-          {document.status === "rejected" && document.rejectionReason && (
+          {effectiveStatus === "rejected" && document.rejectionReason && (
             <div className="flex items-start gap-1.5 mt-1.5">
               <AlertCircle className="w-3.5 h-3.5 text-status-error shrink-0 mt-0.5" />
               <p className="text-xs text-status-error leading-relaxed">
@@ -60,7 +69,7 @@ export function DocumentRow({ document }: DocumentRowProps) {
 
         {/* Status badge */}
         <div className="shrink-0">
-          <DocumentStatusBadge status={document.status} />
+          <DocumentStatusBadge status={effectiveStatus} />
         </div>
 
         {/* Action */}
@@ -75,19 +84,19 @@ export function DocumentRow({ document }: DocumentRowProps) {
               {canResubmit ? "Reemplazar archivo" : "Subir archivo"}
             </Button>
           )}
-          {document.status === "validated" && document.fileUrl && (
+          {effectiveStatus === "validated" && document.fileUrl && (
             <Button variant="ghost" size="sm">
               <Eye className="w-3.5 h-3.5" />
               Ver archivo
             </Button>
           )}
-          {document.status === "validating" && (
+          {effectiveStatus === "validating" && (
             <Button variant="ghost" size="sm" disabled>
               <Clock className="w-3.5 h-3.5" />
               En revisión
             </Button>
           )}
-          {document.status === "pending" && (
+          {effectiveStatus === "pending" && (
             <Button
               variant="outline"
               size="sm"

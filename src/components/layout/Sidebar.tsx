@@ -17,7 +17,7 @@ interface SidebarProps {
 }
 
 const mainNavItems = [
-  { href: "/", label: "Mi espacio", icon: Home },
+  { href: "/espacio", label: "Mi espacio", icon: Home },
   { href: "/tramites", label: "Trámites", icon: ClipboardList },
   { href: "/correo", label: "Correo", icon: Mail },
   { href: "/chats", label: "Chats", icon: MessageCircle },
